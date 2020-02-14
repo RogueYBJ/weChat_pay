@@ -12,17 +12,15 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
+    self.resultBlock = result;
   if ([@"getPlatformVersion" isEqualToString:call.method]) {
     result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
   } else if ([@"pay" isEqualToString:call.method]) {
       if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"wechat://"]] ) {
           result([@"iOS " stringByAppendingString:@"请先安装微信App"]);
-          [self wxpay:call.arguments];
       }else{
           [self wxpay:call.arguments];
-          result([@"iOS " stringByAppendingString:@"微信支付"]);
       }
-      
       return;
   } else {
       
@@ -51,10 +49,23 @@
             request= [dic objectForKey:@"x"];
         /* 调起支付 */
         [WXApi sendReq:request completion:nil];
+    
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+   if ([url.host isEqualToString:@"pay"]){ //微信支付的回调
+        return [WXApi handleOpenURL:url delegate:self];
+    }
+    return YES;
 }
 
 #pragma 微信支付协议
 - (void)onReq:(BaseReq*)req{
     NSLog(@"%@",req);
+}
+
+- (void)onResp:(BaseResp *)resp{
+    self.resultBlock(@"支付完成");
 }
 @end

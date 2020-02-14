@@ -1,4 +1,5 @@
-package com.example.wechat_pay;
+package com.example.wechat_pay.wxapi;
+
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,9 +16,13 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import io.flutter.plugin.common.MethodChannel;
+
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String TAG = "WXPayEntryActivity";
+
+    private static MethodChannel.Result resultBlock;
 
     private IWXAPI api;
 
@@ -44,6 +49,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         Log.d(TAG, "onPayFinish, errCode = " + baseResp.errCode);
         Log.e("baseRespErr------------", "----------" + baseResp.errStr);
+        resultBlock.success("支付完成");
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             handlerResultCode(baseResp.errCode);
         }

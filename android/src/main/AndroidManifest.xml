@@ -1,15 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.example.wechat_pay">
-<!--    <application>-->
-<!--    <activity-->
-<!--        android:exported="true"-->
-<!--        android:screenOrientation="portrait"-->
-<!--        android:name=".wxapi.WXPayEntryActivity">-->
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.VIEW"/>-->
-<!--            <category android:name="android.intent.category.DEFAULT"/>-->
-<!--            <data android:scheme="wx5c685a6653728677"/>-->
-<!--        </intent-filter>-->
-<!--    </activity>-->
-<!--    </application>-->
+    <application>
+    <activity
+        android:exported="true"
+        android:screenOrientation="portrait"
+        android:name=".wxapi.WXPayEntryActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="wx5c685a6653728677"/>
+        </intent-filter>
+    </activity>
+    </application>
 </manifest>
